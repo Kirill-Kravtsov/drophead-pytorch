@@ -9,12 +9,12 @@ There is only one main function - `set_drophead(model, p_drophead)`. As `model` 
 * `transformers.BertModel`
 * `transformers.RobertaModel`
 * `transformers.XLMRobertaModel`
-* Any downstream model from transformers which uses one of the above (e.g. `transformers.BertForSequenceClassification`)
-* Any custom downstream model which uses first 3 above (has it as an attribute). See [example](https://github.com/kirill-kravtsov/drophead-pytorch/blob/master/example.ipynb)
+* Any downstream model from transformers which uses one of the above (e.g. `transformers.BertForSequenceClassification`).
+* Any custom downstream model which uses first 3 above (has it as an attribute). See [example](https://github.com/kirill-kravtsov/drophead-pytorch/blob/master/example.ipynb).
 
 Note:
-* Function `set_drophead` works inplace
-* If you use multiple base models inside one single custom class (e.g. inside your model you average predictions from Bert and Roberta) then apply function directly to your base models. See 2nd example from [here](https://github.com/kirill-kravtsov/drophead-pytorch/blob/master/example.ipynb)
+* Function `set_drophead` works inplace.
+* If you use multiple base models inside one single custom class (e.g. inside your model you average predictions from Bert and Roberta) then apply function directly to your base models. See 2nd example from [here](https://github.com/kirill-kravtsov/drophead-pytorch/blob/master/example.ipynb).
 * In this repo only drophead mechanism itself is implemented. If you want a scheduled drophead like suggested in paper then simply add a call `set_drophead(model, p_drophead)` into your training loop where `p_drophead` will be changing according to your schedule.
 
 ## Requirements
