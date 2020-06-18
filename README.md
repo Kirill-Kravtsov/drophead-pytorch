@@ -14,7 +14,7 @@ There is only one main function - `set_drophead(model, p_drophead)`. As `model` 
 
 Note:
 * Function `set_drophead` works inplace.
-* `model.eval()` works in the same as for usual dropout.
+* `model.train()` and `model.eval()` works in the same as for usual dropout.
 * If you use multiple base models inside one single custom class (e.g. inside your model you average predictions from Bert and Roberta) then apply function directly to your base models. See 2nd example from [here](https://github.com/kirill-kravtsov/drophead-pytorch/blob/master/example.ipynb).
 * In this repo only drophead mechanism itself is implemented. If you want a scheduled drophead like suggested in paper then simply add a call `set_drophead(model, p_drophead)` into your training loop where `p_drophead` will be changing according to your schedule.
 
