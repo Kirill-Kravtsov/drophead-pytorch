@@ -1,4 +1,4 @@
-# Drophead - a pytorch implementation for transformers
+# DropHead - a Pytorch implementation for transformers
 
 ## Introduction
 This is a Pytorch implementation of [Scheduled DropHead: A Regularization Method for Transformer Models](https://arxiv.org/pdf/2004.13342.pdf), a regularization method for transformers. This implementation was designed to work on top of [transformers](https://github.com/huggingface/transformers) package. Currently it works for Bert, Roberta and XLM-Roberta.
@@ -13,6 +13,7 @@ There is only one main function - `set_drophead(model, p_drophead)`. As `model` 
 * Any custom downstream model which uses first 3 above (has it as an attribute). See [example](https://github.com/kirill-kravtsov/drophead-pytorch/blob/master/example.ipynb).
 
 Note:
+* The method was implemented with a [Pytorch hook](https://pytorch.org/tutorials/beginner/former_torchies/nnft_tutorial.html#forward-and-backward-function-hooks). You need to be carefull if you want to save and then load back your model and continue using DropHead (you need to call `set_drophead` again after loading).
 * Function `set_drophead` works inplace.
 * `model.train()` and `model.eval()` work the same as for usual dropout.
 * If you use multiple base models inside one single custom class (e.g. inside your model you average predictions from Bert and Roberta) then apply function directly to your base models. See 2nd example from [here](https://github.com/kirill-kravtsov/drophead-pytorch/blob/master/example.ipynb).
