@@ -16,8 +16,14 @@ def _drophead_hook(module, input, output):
     orig_shape = output[0].shape
     dist = torch.distributions.Bernoulli(torch.tensor([1-module.p_drophead]))
     mask = dist.sample((orig_shape[0], module.num_attention_heads))
-    mask = mask.to(output[0].device).unsqueeze(-1)
+    mask = mask.to(output[0]).unsqueeze(-1)
     count_ones = mask.sum(dim=1).unsqueeze(-1)  # calc num of active heads
+    
+    while count_ones.eq(0).any():  # at least one sent got all heads masked
+         print("Dropout rate might be too high... regenerating mask")
+         mask = dist.sample((orig_shape[0], module.num_attention_heads))
+         mask = mask.to(output[0]).unsqueeze(-1)
+         count_ones = mask.sum(dim=1).unsqueeze(-1)
 
     self_att_out = module.transpose_for_scores(output[0])
     self_att_out = self_att_out * mask * module.num_attention_heads / count_ones
